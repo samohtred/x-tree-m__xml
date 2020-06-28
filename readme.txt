@@ -5,13 +5,15 @@ README - X-TREE-M
 1. What is X-Tree-M ?
 ---------------------
 
-X-Tree-M ('eXtended Tree Method') is aimed to be a discussion tool that's using the DISCO ontology to enable 
-data exchange to and from other discussion tools. It is supposed to store arguments, facts and other relevant 
-items in a tree structure, such as problems and questions.
-This tree structure is not intended to be an ordinary one since it should be possible in the future that two 
-completely different main topics can share the same subtopic. Additionally it should be possible (in case of 
-open questions and problems) to provide a sophisticated workflow to solve open issues like projects. The 
-following list provides an overview of other future key features :
+X-Tree-M ('eXtended Tree Method') is aimed to be a kind of wiki to collect all arguments, questions, facts, etc.
+in a tree-like topic-structure. The goal is to prevent redundant discussions, to share knowledge and arguments
+between Millions of people and to support new political activists to get substantial knowledge pretty fast and
+enable them to start discussing at a higher level.
+This tree structure is not intended to be an ordinary one since it is possible that two completely different 
+main topics can share the same subtopic. In the future it should be possible (in case of open questions and problems) 
+to provide a sophisticated workflow to solve open issues like projects. The following list provides an overview 
+of other future features :
+
 
 - statement extraction from fulltext sources such as chats, emails, forums, etc.
 - fulltext creator -> select items from the argument / fact tree, bring them into the proper order and
@@ -19,58 +21,106 @@ following list provides an overview of other future key features :
 - merge of databases
 - local copy of database for offline usage
 - user login
-- multiple language support
-- multiple Browser support (currently : IE, Firefox)
-- bookmarks ('Favoriten')
 - back / forward functionality
 - comprehensive help system
-- fulltext explanation, chat, voting, change history, post type change, etc. for every item of the tree
+- item-wise chat
+- item-wise change history
 ...
 
 
 2. Currently implemented features :
 -----------------------------------
 
-- GUI is pretty close to the desired look-and-feel
-- items of the topic tree can be created, erased, cut&paste and renamed through keyboard or by using the menu
-- several element types can be applied
-- in the help folder of the menu the current version can be displayed
--> further implemented features can be seen in the file 'setup_global.js'
+- automatic panel browsing by mouseover
+- different views : Tree and Bubble
+- fulltext explanation of an item
+- multilayer voting
+- language setup : German / English
+- Database selection
+- several commands (New, Change, Delete, Copy by Ref, Clone, Cut, Paste)
+- huge keyboard support (fast typing / fast control)
+- DB-Export to HTML
+- focus on a sub-tree by locking it as root item
+- News-Ticker
+- Event-Ticker
+- several Elem-Types (Topic, Pro, Contra, Fact, Idea, Question, Problem, Goal, etc.)
+- Favorites (Bookmarks)
+- Error-Log
+- limit title in the tree to a certain amount of letters
+- alphabetical / categorical sorting
+- multiple Browser support (currently : IE, Firefox)
+- parametrized call to support change between tools
 
 
-3. File overview :
-------------------
+3. File description :
+---------------------
 
-db_init.xml
-  -> current database (currently not connected to DISCO)
-db_intelligence.js
-  -> access to the database as Library Class
-index.html
-  -> global main file of the whole website
-input_dispatcher.js
-  -> central input processing unit (all <A> tags and all keyboard inputs are 
-     handed over to the proper modules and functions)
-main_content.js
-  -> access to middle panel which contains the item content
-main_features.js
-  -> access to the additional features on the right hand side
-main_menu_html.js
-  -> HTML text of main menu is output through Javascript
-main_table.js
-  -> auxiliary table functions such as init, resize and add keyboard listener
-main_tree.js
-  -> elementary topic tree GUI functions
-setup_global.js
-  -> globally used setups such as version, debug mode and database URL can be put in there
-     to make them accessible to all other modules; currently also important global functions
-     are hosted there
-setup_main_menu.css
-  -> stylesheet for main menu
-setup_main_tree.css
-  -> style sheet for topic tree
-setup_user.js
-  -> to store user specific setups and infos (currently as Cookie)
+export_html.php
+	- PHP script for HTML export of database
+
+global_defs.js
+	- global constants
+global_dispatcher.js
+	- global init 
+	- panel resize for panel browsing
+	- gate for every event (keyboard, timer, mouse, ...)
+global_functions.js
+	- global functions (e.g. for compatibility)
+global_lang.js
+	- Language file to change between messages / titles of several languages
+global_setup.js
+	- global setup (version, language, etc.)
+index.php
+	- Entry-Point to the Website  (can be called using parameters -> have a look inside the file)
+lib_data_cookie.js
+	- function library for easy handling of cookies
+lib_data_disco.js
+	- function library if database is switched to "DISCO" (old database backend system meant to be used by several discussion tools 
+		to share content and users)
+lib_data_dispatcher.js
+	- no matter what database is set up, this is the abstract database layer for every database technology
+lib_data_html.js
+	- function library for HTML export
+lib_data_lang.js
+	- file to support language switching for database related texts; maybe this should be merged with another (global) language file
+lib_data_xml.js
+	- function library if database is switched to "XML" (data is simply stored into an XML file)
+lib_dbg_log.js
+	- function library to support easy-to-use debug logging
+lib_dbg_log2email.php
+	- Debug Logs can be emailed through this library
+lib_tree.js
+	- actual function library to handle the tree / bubble view of the items
+lib_tree_lang.js
+	- language file (item types, etc.)
 symbol_xxxxxxxxxxxx.gif
   -> symbols for different element types
-upload.php 
-  -> skript on webserver to help with the upload of data towards the database
+uc_browsing_content.js
+	- everything to handle the content panel of an item
+uc_browsing_dispatcher.js
+	- actually the heart of the system where everything comes together (handling of GUI, database, control, etc.)
+uc_browsing_features.js
+	- features panel on bottom (for bookmarks and other future features such as chat)
+uc_browsing_infopanel.js
+	- info panel on right where global information is displayed (News Ticker, Date Ticker, changed items in the future)
+uc_browsing_lang.js
+	- language file to the "Browsing" usecase (for menu, messages, titles, etc.)
+uc_browsing_menubar.js
+	- menubar handling				
+uc_browsing_setup
+	- actually used config for the usecase ("UC") "browsing" (browsing through the tree
+uc_browsing_setup__DISCO.js
+	- not used - only to show how the setup for the old DISCO database version has to be made
+uc_browsing_setup__XML.js
+	- not used - only to show how the setup for the local XML database version (Apache on local PC) has to be made
+uc_browsing_setup_online.js
+	- not used - only to show how the setup for the remote XML database version (on server) has to be made
+uc_browsing_toolbar.js
+	- toolbar line directly below menubar (displays currently selected language, item type and region)
+uc_browsing_tree_db.xml
+	- actual database (data is stored in XML file)
+uc_browsing_upload.php
+	- PHP script to store data in XML file on server
+uc_merging_dispatcher.js
+	- unfinished Usecase "Merging" (meant to merge different databases of several groups into one)
+	

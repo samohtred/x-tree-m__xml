@@ -76,10 +76,6 @@ function lib_dbg_log_create_email()
     message = message + this.log_array[i] + '\\n';   // oder '\\n'
   }
 
-//  var MailMSG = "mailto:allusion@gmx.de" 
-//         + "?subject=[X-Tree-M Error Log]" 
-//         + "&body=" + message; 
-//  window.location.href = MailMSG; 
 
  
   if (window.XMLHttpRequest)
